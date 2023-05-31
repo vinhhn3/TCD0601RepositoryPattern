@@ -11,14 +11,39 @@ namespace WebApi.Repositories
         {
             _context = context;
         }
-        public void CreateProduct(Product product)
+        public bool CreateProduct(Product product)
         {
-            throw new NotImplementedException();
+            var newProduct = new Product
+            {
+                Name = product.Name,
+                Price = product.Price,
+            };
+
+            try
+            {
+                _context.Products.Add(newProduct);
+                return _context.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
-        public void DeleteProduct(int productId)
+        public bool DeleteProduct(int productId)
         {
-            throw new NotImplementedException();
+            var product = GetProductById(productId);
+            if (product == null) {
+                return false;
+            }
+            _context.Remove(product);
+            return _context.SaveChanges() > 0;
+        }
+
+        public Product GetProductById(int productId)
+        {
+            return _context.Products.SingleOrDefault(t => t.Id == productId);
         }
 
         public List<Product> GetProducts()

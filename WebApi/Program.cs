@@ -20,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddMemoryCache(); 
 
 var app = builder.Build();
 
